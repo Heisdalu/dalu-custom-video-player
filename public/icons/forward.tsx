@@ -1,9 +1,9 @@
 const Forward = () => {
   return (
     <svg
-      width="38"
+      width="20"
       aria-hidden="true"
-      height="26"
+      height="20"
       viewBox="0 0 38 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
