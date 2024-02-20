@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Backward from "../../public/icons/backward";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +14,9 @@ export default function Home() {
 
         <div>
           <div aria-label="video controls">
-            <div>
-              
-            </div>
+            <button>
+              <Backward />
+            </button>
           </div>
         </div>
       </div>

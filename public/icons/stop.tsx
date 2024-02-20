@@ -2,6 +2,7 @@ const Stop = () => {
   return (
     <svg
       width="25"
+      aria-hidden="true"
       height="25"
       viewBox="0 0 25 25"
       fill="none"

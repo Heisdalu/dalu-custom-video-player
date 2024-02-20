@@ -1,6 +1,7 @@
 const Volume = () => {
   return (
     <svg
+      aria-hidden="true"
       width="26"
       height="21"
       viewBox="0 0 26 21"

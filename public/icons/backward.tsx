@@ -1,6 +1,7 @@
 const Backward = () => {
   return (
     <svg
+      aria-hidden="true"
       width="38"
       height="26"
       viewBox="0 0 38 26"

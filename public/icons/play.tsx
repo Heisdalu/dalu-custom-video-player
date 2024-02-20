@@ -2,6 +2,7 @@ const Play = () => {
   return (
     <svg
       width="19"
+      aria-hidden="true"
       height="25"
       viewBox="0 0 19 25"
       fill="none"
