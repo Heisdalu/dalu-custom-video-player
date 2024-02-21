@@ -2,3 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .muted {
+    position: relative;
+  }
+
+  .muted::after {
+    content: "";
+    height: 150%;
+    width: 3px;
+    position: absolute;
+    background-color: gray;
+    top: -5px;
+    right: 50%;
+    transform: rotate(50deg);
+  }
+}

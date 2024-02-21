@@ -4,13 +4,18 @@ import Backward from "../../public/icons/backward";
 import Play from "../../public/icons/play";
 import Forward from "../../public/icons/forward";
 import Stop from "../../public/icons/stop";
-import Volume from "../../public/icons/volume";
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
+import {
+  ChangeEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Pause from "../../public/icons/pause";
 import { convertSecToStandardVideoDate } from "../../utils";
+import VolumeSection from "@/components/Volume/VolumeSection";
 
 const inter = Inter({ subsets: ["latin"] });
-/// todo--correct video ormat or hours also
+/// todo--correct video format or hours also
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -44,7 +49,7 @@ export default function Home() {
 
   const videoDurationFunc: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (videoRef.current) {
-      // get current time from range value..
+      // get current time from range value slider..
       const value = Number(
         ((Number(e.target.value) * videoRef.current.duration) / 100).toFixed(2)
       );
@@ -66,10 +71,6 @@ export default function Home() {
     videoRef.current.pause();
     videoRef.current.currentTime = 0;
   };
-
-  const volumeHandler = () => {
-    
-  }
 
   useEffect(() => {
     setMounted(true);
@@ -148,16 +149,7 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="flex items-center space-x-[0.5rem]">
-            <Volume />
-            <input
-              type="range"
-              onChange={volumeHandler}
-              min={0}
-              max={100}
-              className="range range-xs w-[50px] range-warning"
-            />
-          </div>
+          <VolumeSection videoRef={videoRef} />
         </div>
       </div>
     </div>
