@@ -7,3 +7,13 @@ export const convertSecToStandardVideoDate = (secs: number): string => {
 
   return durationMaths;
 };
+
+export const rangeTimeFormat = (
+  currentTime: number,
+  duration: number
+): number | null => {
+  if (!currentTime && !duration) return null;
+
+  const value = (currentTime / duration) * 100;
+  return value;
+};
