@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export const convertSecToStandardVideoDate = (secs: number): string => {
   if (!secs) return "0:00";
   // not done yet
@@ -17,3 +19,8 @@ export const rangeTimeFormat = (
   const value = (currentTime / duration) * 100;
   return value;
 };
+
+
+export interface VideoRefProps {
+  videoRef: RefObject<HTMLVideoElement | null>;
+}

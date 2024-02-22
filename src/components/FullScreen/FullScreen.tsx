@@ -1,17 +1,14 @@
 import { FC, RefObject, useEffect, useState } from "react";
 import FullscreenIcon from "../../../public/icons/fullscreenIcon";
+import { VideoRefProps } from "../../../utils";
 
-interface Props {
-  videoref: RefObject<HTMLVideoElement | null>;
-}
-
-const Fullscreen: FC<Props> = ({ videoref }) => {
+const Fullscreen: FC<VideoRefProps> = ({ videoRef }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const clickHandler = () => {
-    if (!videoref.current) return;
+    if (!videoRef.current) return;
 
-    videoref.current.requestFullscreen();
+    videoRef.current.requestFullscreen();
 
     setIsClicked(true);
   };

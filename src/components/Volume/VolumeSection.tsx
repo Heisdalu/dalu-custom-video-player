@@ -8,12 +8,10 @@ import {
   useRef,
 } from "react";
 import Volume from "../../../public/icons/volume";
+import { VideoRefProps } from "../../../utils";
 
-interface VolumeSectionProps {
-  videoRef: RefObject<HTMLVideoElement | null>;
-}
 
-const VolumeSection: FC<VolumeSectionProps> = ({ videoRef }) => {
+const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [volumeCount, setVolumeCount] = useState(1);
   const volumeRangeRef = useRef<HTMLInputElement | null>(null);

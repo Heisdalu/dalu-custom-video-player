@@ -8,6 +8,7 @@ import Pause from "../../public/icons/pause";
 import { convertSecToStandardVideoDate } from "../../utils";
 import VolumeSection from "@/components/Volume/VolumeSection";
 import FullScreen from "@/components/FullScreen/FullScreen";
+import PlayBackSpeed from "@/components/PlayBack/PlayBackSpeed";
 
 const inter = Inter({ subsets: ["latin"] });
 /// todo--correct video format or hours also
@@ -93,8 +94,8 @@ export default function Home() {
 
   return (
     <div className="px-[1rem] h-[100vh] flex justify-center items-center">
-      <div>
-        <div className="max-w-[600px] h-[300px] bg-black">
+      <div className="flex flex-col items-center">
+        <div className="max-w-[600px] h-[300px] bg-black w-[100%]">
           <video
             controls
             onEnded={endVideo}
@@ -152,8 +153,8 @@ export default function Home() {
           </div>
 
           <VolumeSection videoRef={videoRef} />
-          <FullScreen videoref={videoRef} />
-          <button>1.5X</button>
+          <FullScreen videoRef={videoRef} />
+          <PlayBackSpeed />
         </div>
       </div>
     </div>
