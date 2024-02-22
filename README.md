@@ -36,6 +36,7 @@ A custom video player made from scratch using html5 features
 - run npm install on the terminal
 - after installation of packages, run npm start
 
-## Acknowledgement
+## Resources
+- [HtmlMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
+- [Html5 Video](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Video_and_audio_APIs)
 
-- Frontendpro frontend challenge
