@@ -66,9 +66,11 @@ const VolumeSection: FC<VolumeSectionProps> = ({ videoRef }) => {
 
   return (
     <div className="flex items-center space-x-[0.5rem]">
-      <button className={`${isMuted && "muted"}`} onClick={muteHandler}>
-        <Volume />
-      </button>
+      <div className="tooltip" data-tip={isMuted ? "muted" : "mute"}>
+        <button className={`${isMuted && "muted"}`} onClick={muteHandler}>
+          <Volume />
+        </button>
+      </div>
       <input
         ref={volumeRangeRef}
         type="range"

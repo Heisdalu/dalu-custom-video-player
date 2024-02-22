@@ -110,25 +110,30 @@ export default function Home() {
 
         <div className="md:space-x-[1rem] flex flex-col space-y-[1rem] border-[1px] px-[0.5rem] py-[1rem] items-center justify-between md:flex-row md:space-y-0">
           <div aria-label="video controls" className="flex space-x-[1rem]">
-            <button title="rewind video">
-              <Backward />
-            </button>
-            <button
-              onClick={playVideoFunc}
-              title={isPlayed ? "pause video" : "play video"}
+            <div className="tooltip" data-tip="rewind video">
+              <button>
+                <Backward />
+              </button>
+            </div>
+            <div
+              className="tooltip"
+              data-tip={isPlayed ? "pause video" : "play video"}
             >
-              {isPlayed ? <Pause /> : <Play />}
-            </button>
-            <button title="forward video">
-              <Forward />
-            </button>
-            <button
-              aria-label="stop video"
-              onClick={stopVideoFunc}
-              title="stop video"
-            >
-              <Stop />
-            </button>
+              <button onClick={playVideoFunc}>
+                {isPlayed ? <Pause /> : <Play />}
+              </button>
+            </div>
+            <div className="tooltip" data-tip="forward video">
+              <button>
+                <Forward />
+              </button>
+            </div>
+
+            <div className="tooltip" data-tip="stop video">
+              <button aria-label="stop video" onClick={stopVideoFunc}>
+                <Stop />
+              </button>
+            </div>
           </div>
 
           <div className="items-center flex space-x-[0.5rem]">

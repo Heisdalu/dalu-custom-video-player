@@ -33,14 +33,14 @@ const Fullscreen: FC<Props> = ({ videoref }) => {
   }, [isClicked]);
 
   return (
-    <button
-      title="press enter or escape key to exit fullscreen
-      "
-      onClick={clickHandler}
-      className="active:bg-gray-600"
+    <div
+      className="tooltip"
+      data-tip="press enter or escape key to exit fullscreen"
     >
-      <FullscreenIcon />
-    </button>
+      <button onClick={clickHandler} className="active:bg-gray-600">
+        <FullscreenIcon />
+      </button>
+    </div>
   );
 };
 export default Fullscreen;
