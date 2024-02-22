@@ -41,7 +41,7 @@ const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
   const muteHandler: MouseEventHandler<HTMLButtonElement> = () => {
     if (!videoRef.current) return;
     setVolumeCount(videoRef.current.volume);
-    console.log(volumeCount, isMuted);
+    // console.log(volumeCount, isMuted);
 
     // volumecount is taken to 0 and isMuted to true.. don't toggle
     if (volumeCount === 0 && isMuted) return;
@@ -49,7 +49,7 @@ const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
   };
 
   useEffect(() => {
-    console.log(videoRef.current?.muted, isMuted, volumeCount);
+    // console.log(videoRef.current?.muted, isMuted, volumeCount);
     if (!videoRef.current?.muted && isMuted && volumeRangeRef.current) {
       videoRef.current!.muted = true;
       volumeRangeRef.current.value = "0";

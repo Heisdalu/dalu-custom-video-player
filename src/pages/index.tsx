@@ -44,7 +44,9 @@ export default function Home() {
   };
 
   const videoDurationFunc: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (videoRef.current) {
+    //readystate lower than zero means no video is available
+
+    if (videoRef.current && videoRef.current?.readyState !== 0) {
       // get current time from range value slider..
       const value = Number(
         ((Number(e.target.value) * videoRef.current.duration) / 100).toFixed(2)
@@ -53,7 +55,7 @@ export default function Home() {
       videoRef.current.currentTime = value;
       videoPlayedTimeRef.current!.textContent =
         convertSecToStandardVideoDate(value);
-      console.log(convertSecToStandardVideoDate(value));
+      // console.log(convertSecToStandardVideoDate(value));
     }
   };
 
@@ -104,12 +106,12 @@ export default function Home() {
     }
 
     if (!isPlayed && videoRef.current && !videoRef.current.paused) {
-      console.log(videoRef.current.currentTime);
+      // console.log(videoRef.current.currentTime);
       videoRef.current.pause();
     }
   }, [isPlayed, mounted]);
 
-  console.log(videoRef.current?.duration);
+  // console.log(videoRef.current?.duration);
 
   return (
     <div
