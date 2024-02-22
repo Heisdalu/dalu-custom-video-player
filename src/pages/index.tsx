@@ -4,15 +4,11 @@ import Backward from "../../public/icons/backward";
 import Play from "../../public/icons/play";
 import Forward from "../../public/icons/forward";
 import Stop from "../../public/icons/stop";
-import {
-  ChangeEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Pause from "../../public/icons/pause";
 import { convertSecToStandardVideoDate } from "../../utils";
 import VolumeSection from "@/components/Volume/VolumeSection";
+import FullScreen from "@/components/FullScreen/FullScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 /// todo--correct video format or hours also
@@ -72,6 +68,8 @@ export default function Home() {
     videoRef.current.currentTime = 0;
   };
 
+  const toggleFullScreenShot = () => {};
+
   useEffect(() => {
     setMounted(true);
 
@@ -99,7 +97,7 @@ export default function Home() {
       <div>
         <div className="max-w-[500px] h-[300px] bg-black">
           <video
-            controls
+            // controls
             onEnded={endVideo}
             onTimeUpdate={videoTimeUpdateFunc}
             ref={videoRef}
@@ -150,6 +148,7 @@ export default function Home() {
           </div>
 
           <VolumeSection videoRef={videoRef} />
+          <FullScreen videoref={videoRef} />
         </div>
       </div>
     </div>
