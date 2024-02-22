@@ -37,7 +37,10 @@ const Fullscreen: FC<Props> = ({ videoref }) => {
       className="tooltip"
       data-tip="press enter or escape key to exit fullscreen"
     >
-      <button onClick={clickHandler} className="active:bg-gray-600">
+      <button
+        onClick={clickHandler}
+        className="border-[1px] border-gray-200 active:bg-gray-600"
+      >
         <FullscreenIcon />
       </button>
     </div>

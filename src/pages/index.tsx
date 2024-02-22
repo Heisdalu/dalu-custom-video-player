@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import Backward from "../../public/icons/backward";
 import Play from "../../public/icons/play";
@@ -93,11 +92,11 @@ export default function Home() {
   console.log(videoRef.current?.duration);
 
   return (
-    <div className="border-[10px] h-[100vh] flex justify-center items-center">
+    <div className="px-[1rem] h-[100vh] flex justify-center items-center">
       <div>
-        <div className="max-w-[500px] h-[300px] bg-black">
+        <div className="max-w-[600px] h-[300px] bg-black">
           <video
-            // controls
+            controls
             onEnded={endVideo}
             onTimeUpdate={videoTimeUpdateFunc}
             ref={videoRef}
@@ -154,6 +153,7 @@ export default function Home() {
 
           <VolumeSection videoRef={videoRef} />
           <FullScreen videoref={videoRef} />
+          <button>1.5X</button>
         </div>
       </div>
     </div>
