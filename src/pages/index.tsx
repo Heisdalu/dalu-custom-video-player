@@ -71,25 +71,25 @@ export default function Home() {
   };
 
   const rewindVideo = () => {
-    //  we rewind video by 15 secs
-    // do not rewind when video current time is less than 15 secs
-    // rewind when when it is above 15 secs
-    if (!videoRef.current || videoRef.current!?.currentTime < 15) return;
+    //  we rewind video by 5 secs
+    // do not rewind when video current time is less than 5 secs
+    // rewind when when it is above 5 secs
+    if (!videoRef.current || videoRef.current!?.currentTime < 5) return;
 
-    videoRef.current!.currentTime = videoRef.current!.currentTime - 15;
+    videoRef.current!.currentTime = videoRef.current!.currentTime - 5;
   };
   const forwardVideo = () => {
-    //  we forward video by 15 secs
-    // do not forward when video current time + 15 secs exceed video duration
-    // forward video current time  + 15 secs is less than video duration
+    //  we forward video by 5 secs
+    // do not forward when video current time + 5 secs exceed video duration
+    // forward video current time  + 5 secs is less than video duration
 
     if (
       !videoRef.current ||
-      videoRef.current!?.currentTime + 15 > videoRef.current.duration
+      videoRef.current!?.currentTime + 5 > videoRef.current.duration
     )
       return;
 
-    videoRef.current!.currentTime = videoRef.current!.currentTime + 15;
+    videoRef.current!.currentTime = videoRef.current!.currentTime + 5;
   };
 
   useEffect(() => {
@@ -126,8 +126,8 @@ export default function Home() {
             ref={videoRef}
             className="h-[100%] w-[100%]"
           >
-            <source src="/clip/prisma.mp4" type="video/mp4" />
-            <source src="/clip/lol.webm" type="video/webm" />
+            <source src="/clip/rabbit.mp4" type="video/mp4" />
+            <source src="/clip/rabbit.webm" type="video/webm" />
           </video>
         </div>
 
