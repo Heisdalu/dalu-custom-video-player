@@ -11,7 +11,7 @@ export const convertSecToStandardVideoDate = (totalSecs: number): string => {
     const secs = rem_hrs % 60;
     console.log(hrs, mins, secs, totalSecs);
 
-    return `${Math.floor(hrs).toString().padStart(2, "0")}:${Math.floor(mins)
+    return `${Math.floor(hrs).toString()}:${Math.floor(mins)
       .toString()
       .padStart(2, "0")}:${Math.floor(secs).toString().padStart(2, "0")}`;
   }
