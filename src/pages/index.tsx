@@ -103,7 +103,7 @@ export default function Home() {
             ref={videoRef}
             className="h-[100%] w-[100%]"
           >
-            <source src="/clip/lol.mp4" type="video/mp4" />
+            <source src="/clip/prisma.mp4" type="video/mp4" />
             <source src="/clip/lol.webm" type="video/webm" />
           </video>
         </div>
