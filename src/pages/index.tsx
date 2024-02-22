@@ -68,13 +68,32 @@ export default function Home() {
     videoRef.current.currentTime = 0;
   };
 
-  const toggleFullScreenShot = () => {};
+  const rewindVideo = () => {
+    //  we rewind video by 15 secs
+    // do not rewind when video current time is less than 15 secs
+    // rewind when when it is above 15 secs
+    if (!videoRef.current || videoRef.current!?.currentTime < 15) return;
+
+    videoRef.current!.currentTime = videoRef.current!.currentTime - 15;
+  };
+  const forwardVideo = () => {
+    //  we forward video by 15 secs
+    // do not forward when video current time + 15 secs exceed video duration
+    // forward video current time  + 15 secs is less than video duration
+
+    if (
+      !videoRef.current ||
+      videoRef.current!?.currentTime + 15 > videoRef.current.duration
+    )
+      return;
+
+    videoRef.current!.currentTime = videoRef.current!.currentTime + 15;
+  };
 
   useEffect(() => {
     setMounted(true);
 
     if (videoRef.current && !mounted && rangeVideoTimeRef.current) {
-      console.log("ddhdh");
       rangeVideoTimeRef.current.value = "0";
       const value = convertSecToStandardVideoDate(videoRef.current.duration);
       setVideoTime(value);
@@ -93,7 +112,9 @@ export default function Home() {
   console.log(videoRef.current?.duration);
 
   return (
-    <div className="px-[1rem] h-[100vh] flex justify-center items-center">
+    <div
+      className={`${inter.className} px-[1rem] h-[100vh] flex justify-center items-center`}
+    >
       <div className="flex flex-col items-center">
         <div className="max-w-[600px] h-[300px] bg-black w-[100%]">
           <video
@@ -111,7 +132,7 @@ export default function Home() {
         <div className="md:space-x-[1rem] flex flex-col space-y-[1rem] border-[1px] px-[0.5rem] py-[1rem] items-center justify-between md:flex-row md:space-y-0">
           <div aria-label="video controls" className="flex space-x-[1rem]">
             <div className="tooltip" data-tip="rewind video">
-              <button>
+              <button onClick={rewindVideo}>
                 <Backward />
               </button>
             </div>
@@ -124,7 +145,7 @@ export default function Home() {
               </button>
             </div>
             <div className="tooltip" data-tip="forward video">
-              <button>
+              <button onClick={forwardVideo}>
                 <Forward />
               </button>
             </div>
