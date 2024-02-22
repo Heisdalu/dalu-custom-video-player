@@ -154,7 +154,7 @@ export default function Home() {
 
           <VolumeSection videoRef={videoRef} />
           <FullScreen videoRef={videoRef} />
-          <PlayBackSpeed />
+          <PlayBackSpeed videoRef={videoRef} />
         </div>
       </div>
     </div>
