@@ -1,4 +1,6 @@
-import { RefObject } from "react";
+import { RefObject, JSX } from "react";
+import { userEvent } from "@testing-library/user-event";
+import { render } from "@testing-library/react";
 
 export const convertSecToStandardVideoDate = (totalSecs: number): string => {
   if (!totalSecs) return "0:00";
@@ -15,7 +17,6 @@ export const convertSecToStandardVideoDate = (totalSecs: number): string => {
       .toString()
       .padStart(2, "0")}:${Math.floor(secs).toString().padStart(2, "0")}`;
   }
-  
 
   //render in minutes e.g 35:01
   const durationMaths = `${Math.floor(totalSecs / 60)}:${Math.floor(
@@ -39,4 +40,13 @@ export const rangeTimeFormat = (
 
 export interface VideoRefProps {
   videoRef: RefObject<HTMLVideoElement | null>;
+}
+
+// default for reusable user event
+// See https://testing-library.com/docs/dom-testing-library/install#wrappers
+export function setup(jsx: JSX.Element) {
+  return {
+    user: userEvent.setup(),
+    ...render(jsx),
+  };
 }

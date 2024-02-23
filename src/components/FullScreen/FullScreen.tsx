@@ -1,4 +1,4 @@
-import { FC, RefObject, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import FullscreenIcon from "../../../public/icons/fullscreenIcon";
 import { VideoRefProps } from "../../../utils";
 
