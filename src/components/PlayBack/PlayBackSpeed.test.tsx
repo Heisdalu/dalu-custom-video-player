@@ -89,7 +89,7 @@ describe("PlaybackSpeed Component", () => {
     });
   });
 
-  test("playback speed rate  changes when playback select rate", async () => {
+  test("playback speed rate updates correctly when playback speed select tag  is changed", async () => {
     const { user } = setup(<PlayBackSpeed videoRef={videoMockRef} />);
     const selectElem = screen.getByRole("combobox");
 
