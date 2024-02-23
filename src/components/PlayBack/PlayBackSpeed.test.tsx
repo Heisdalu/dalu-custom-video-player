@@ -99,4 +99,17 @@ describe("PlaybackSpeed Component", () => {
       expect(videoMockRef.current.playbackRate).toBe(1.5);
     });
   });
+
+
+  test("playback speed rate remains constant when there is an invalid playback select change", async () => {
+    const { user } = setup(<PlayBackSpeed videoRef={videoMockRef} />);
+    const selectElem: HTMLSelectElement = screen.getByRole("combobox");
+
+    // invalid select option
+    user.selectOptions(selectElem, "default");
+
+    await waitFor(() => {
+      expect(videoMockRef.current.playbackRate).toBe(1);
+    });
+  });
 });
