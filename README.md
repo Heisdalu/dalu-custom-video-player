@@ -16,7 +16,7 @@ A custom video player made from scratch using html5 features
 
 ### Screenshot
 
-![screenshot](./src/assets/Vite%20%2B%20React.png)
+![screenshot](./public/ss.png)
 
 ### Links
 
