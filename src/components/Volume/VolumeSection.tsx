@@ -1,6 +1,5 @@
 import {
   useState,
-  RefObject,
   MouseEventHandler,
   ChangeEventHandler,
   FC,
@@ -9,7 +8,6 @@ import {
 } from "react";
 import Volume from "../../../public/icons/volume";
 import { VideoRefProps } from "../../../utils";
-
 
 const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
   const [isMuted, setIsMuted] = useState(false);
@@ -49,12 +47,20 @@ const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
   };
 
   useEffect(() => {
-    // console.log(videoRef.current?.muted, isMuted, volumeCount);
+    //inital render,  input range value to be 1
+    if (volumeRangeRef.current) {
+      volumeRangeRef.current.value = `${volumeCount}`;
+    }
+  }, []);
+
+  useEffect(() => {
+    //when muted is clicked, mute the volume
     if (!videoRef.current?.muted && isMuted && volumeRangeRef.current) {
       videoRef.current!.muted = true;
       volumeRangeRef.current.value = "0";
     }
 
+    // when volume is unmuted when it was previously muted.. input the previous volume count before it was muted
     if (videoRef.current?.muted && !isMuted && volumeRangeRef.current) {
       videoRef.current!.muted = false;
       volumeRangeRef.current.value = `${volumeCount}`;
@@ -64,7 +70,11 @@ const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
 
   return (
     <div className="flex items-center space-x-[0.5rem]">
-      <div className="tooltip" data-tip={isMuted ? "muted" : "mute"}>
+      <div
+        className="tooltip"
+        data-testid="custom_tooltip"
+        data-tip={isMuted ? "muted" : "mute"}
+      >
         <button className={`${isMuted && "muted"}`} onClick={muteHandler}>
           <Volume />
         </button>
