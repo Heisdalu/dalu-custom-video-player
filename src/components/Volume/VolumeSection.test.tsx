@@ -88,6 +88,8 @@ describe("VolumeSection Component", () => {
 
     const volumeRangeSlider: HTMLInputElement = screen.getByRole("slider");
     const muteBtn = screen.getByRole("button");
+    const mutedBtn = screen.getByRole("button");
+    const tooltip = screen.getByTestId("custom_tooltip");
 
     // must have initial of 1
     expect(videoMockRef.current.volume).toBe(1);
@@ -102,6 +104,8 @@ describe("VolumeSection Component", () => {
 
     expect(videoMockRef.current.volume).toBe(1);
     expect(volumeRangeSlider).toHaveValue("0");
+    expect(tooltip.dataset.tip).toBe("muted");
+    expect(mutedBtn).toHaveClass("muted");
   });
 
   test("sets volume to unmuted and slider value to default(1) or to where it was changed(0.01 - 1) when mute button is clicked twice", async () => {
@@ -110,6 +114,8 @@ describe("VolumeSection Component", () => {
     render(<VolumeSection videoRef={videoMockRef} />);
     const volumeRangeSlider: HTMLInputElement = screen.getByRole("slider");
     const muteBtn = screen.getByRole("button");
+     const mutedBtn = screen.getByRole("button");
+     const tooltip = screen.getByTestId("custom_tooltip");
 
     // slider value should be 0.7
     fireEvent.change(volumeRangeSlider, { target: { value: 0.7 } });
@@ -123,6 +129,9 @@ describe("VolumeSection Component", () => {
       expect(volumeRangeSlider).toHaveValue("0");
     });
 
+    expect(tooltip.dataset.tip).toBe("muted");
+    expect(mutedBtn).toHaveClass("muted");
+
     // click again to unmute
     fireEvent.click(muteBtn);
 
@@ -134,5 +143,9 @@ describe("VolumeSection Component", () => {
 
     expect(volumeRangeSlider).toHaveValue("0.7");
     expect(videoMockRef.current.volume).toBe(0.7);
+    expect(tooltip.dataset.tip).toBe("mute");
+    expect(mutedBtn).not.toHaveClass("muted");
   });
 });
+
+
