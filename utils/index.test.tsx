@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { convertSecToStandardVideoDate, setup } from ".";
 
 describe("convertSecToStandardVideoDate", () => {
@@ -6,9 +5,11 @@ describe("convertSecToStandardVideoDate", () => {
     const totalSecs = null;
     const totalSecs1 = false;
     const totalSecs2 = 0;
-
+    //@ts-ignore
     expect(convertSecToStandardVideoDate(totalSecs)).toBe("0:00");
+    //@ts-ignore
     expect(convertSecToStandardVideoDate(totalSecs1)).toBe("0:00");
+    //@ts-ignore
     expect(convertSecToStandardVideoDate(totalSecs2)).toBe("0:00");
   });
 
@@ -44,7 +45,6 @@ describe("convertSecToStandardVideoDate", () => {
 describe("setup", () => {
   test("should render jsx element properly ", () => {
     const jsx = <div>hello divine</div>;
-
 
     const result = setup(jsx);
 
