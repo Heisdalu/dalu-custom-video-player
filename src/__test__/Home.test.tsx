@@ -130,7 +130,7 @@ describe("<Home />", () => {
 
     // console.log(videoElem.currentTime, "soilllllllllllllll");
     await waitFor(() => {
-      console.log(videoElem.currentTime);
+      // console.log(videoElem.currentTime);
       expect(videoElem.currentTime).toBe(5);
     });
   });
@@ -211,7 +211,100 @@ describe("<Home />", () => {
     });
   });
 
-  test("lol", () => {});
-});
+  test("should pause the video when video ends", async () => {
+    render(<Home />);
 
-//https://youtu.be/8uxt-FnNy2I?si=LZQowllVIDn7K5xA
+    const videoPauseMock = jest
+      .spyOn(HTMLMediaElement.prototype, "pause")
+      .mockImplementation();
+
+    Object.defineProperty(HTMLMediaElement.prototype, "duration", {
+      value: 50,
+      writable: true,
+    });
+
+    const videoElem: HTMLVideoElement = screen.getByTestId("video");
+    const playBtn = screen.getByRole("button", { name: /play/i });
+
+    //play video
+    fireEvent.click(playBtn);
+
+    Object.defineProperty(HTMLMediaElement.prototype, "currentTime", {
+      value: 50,
+      writable: true,
+    });
+
+    // video.paused === false
+    Object.defineProperty(HTMLMediaElement.prototype, "paused", {
+      get: () => false,
+    });
+
+    //video ends
+    fireEvent.ended(videoElem);
+
+    await waitFor(() => {
+      expect(videoPauseMock).toHaveBeenCalledTimes(1);
+      expect(playBtn).toBeInTheDocument(); //play button is visible
+      expect(screen.queryByRole("button", { name: /pause/i })).toBeNull(); //pause button is nott visible
+    });
+  });
+
+  test("should have initial of 0:00 and 0:36(when video duration is 36secs) on video timestamp start and end respectively", async () => {
+    // video duration is 36 secs on initial load// should be  0:36 on end time stamp
+    Object.defineProperty(HTMLMediaElement.prototype, "duration", {
+      value: 36,
+      writable: true,
+    });
+    render(<Home />);
+
+    const initalTimeStamp = screen.getByTestId("video-initial-timestamp");
+    const endTimeStamp = await screen.findByTestId("video-end-timestamp");
+    const videoRange: HTMLInputElement = screen.getByRole("slider", {
+      name: "video slider range",
+    });
+
+    await waitFor(() => {
+      expect(initalTimeStamp).toHaveTextContent("0:00");
+      expect(endTimeStamp).toHaveTextContent("0:36");
+      expect(videoRange).toHaveValue("0"); // video slider range must be 0
+    });
+  });
+
+  test("should have 5:01 and 10:45 on video timestamp start and end respectively when video timeUpdate is triggered", async () => {
+    // when videotimeUpdate is triggered, video start on 301 secs and 645 secs for duration..it could be dynmaic
+    // just hardcoding
+
+    Object.defineProperty(HTMLMediaElement.prototype, "duration", {
+      value: 645,
+      writable: true,
+    });
+
+    render(<Home />);
+
+    const videoElem: HTMLVideoElement = screen.getByTestId("video");
+
+    const initalTimeStamp = screen.getByTestId("video-initial-timestamp");
+    const endTimeStamp = await screen.findByTestId("video-end-timestamp");
+    const videoRange: HTMLInputElement = screen.getByRole("slider", {
+      name: "video slider range",
+    });
+
+    Object.defineProperty(HTMLMediaElement.prototype, "currentTime", {
+      value: 301,
+      writable: true,
+    });
+
+    //timeupdate triggers on video
+    fireEvent.timeUpdate(videoElem);
+
+    await waitFor(() => {
+      expect(initalTimeStamp).toHaveTextContent("5:01"); // 5:01
+      expect(endTimeStamp).toHaveTextContent("10:45"); // 5:01
+      expect(videoRange).toHaveValue("46.67"); // video slider range must have 46.47 as the value
+    });
+  });
+
+  test("should return when htmlMedia is null", async () => {
+    
+  });
+});
