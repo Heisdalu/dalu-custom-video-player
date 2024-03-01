@@ -1,7 +1,8 @@
-import { setup } from "../../utils";
+import { convertSecToStandardVideoDate, setup } from "../../utils";
 import Home from "../pages/index";
 import React from "react";
 import { screen, render, waitFor, fireEvent } from "@testing-library/react";
+import Volume from "../../public/icons/volume";
 describe("<Home />", () => {
   beforeEach(() => {
     Object.defineProperty(HTMLMediaElement.prototype, "paused", {
@@ -14,6 +15,9 @@ describe("<Home />", () => {
     Object.defineProperty(HTMLMediaElement.prototype, "duration", {
       get: () => 0,
     });
+    Object.defineProperty(HTMLMediaElement.prototype, "readyState", {
+      get: () => 0,
+    });
 
     jest.clearAllMocks();
   });
@@ -23,8 +27,9 @@ describe("<Home />", () => {
 
   test("video tag should be present", () => {
     render(<Home />);
-    const videoElem = screen.getByTestId("video");
+    const videoElem: HTMLVideoElement = screen.getByTestId("video");
     expect(videoElem).toBeInTheDocument();
+    expect(videoElem.currentTime).toBe(0);
   });
 
   test("should play the video when play button is clicked", async () => {
@@ -304,7 +309,66 @@ describe("<Home />", () => {
     });
   });
 
-  test("should return when htmlMedia is null", async () => {
-    
+  test("input range slider should have an inital max of 100, min of 0, step of 0.01 and value of 0", async () => {
+    render(<Home />);
+    const videoRange: HTMLInputElement = screen.getByRole("slider", {
+      name: "video slider range",
+    });
+
+    expect(videoRange.max).toBe("100");
+    expect(videoRange.min).toBe("0");
+    expect(videoRange.step).toBe("0.01");
+    expect(videoRange.value).toBe("0");
+    expect(videoRange).toHaveClass("range range-xs range-warning"); //should have daisyUI class
+  });
+
+  test("should update video timestamp currentTime, start and end when range input slider changes", async () => {
+    // duration should be 80 secs... 1:20
+    Object.defineProperty(HTMLMediaElement.prototype, "duration", {
+      value: 80,
+      writable: true,
+    });
+    // convert currentime to writable..since it was just a getter in beforeEach
+    Object.defineProperty(HTMLMediaElement.prototype, "currentTime", {
+      value: 0,
+      writable: true,
+    });
+
+    Object.defineProperty(HTMLMediaElement.prototype, "readyState", {
+      // video is ready
+      value: 2,
+      writable: true,
+    });
+
+    render(<Home />);
+
+    const videoElem: HTMLVideoElement = screen.getByTestId("video");
+    const videoRange: HTMLInputElement = screen.getByRole("slider", {
+      name: "video slider range",
+    });
+    const initalTimeStamp = screen.getByTestId("video-initial-timestamp");
+    const endTimeStamp = await screen.findByTestId("video-end-timestamp");
+
+    // video range slider value changes to 50.. e.g 0  to 100 scale.. we pick 50 (half)..the current Time must be 40secs
+    fireEvent.change(videoRange, { target: { value: 50 } });
+
+    //cuurent time must be 40secs.. since it was halved on the range slider (50)
+    expect(videoElem.currentTime).toBe(40);
+    //intial time display moved to 0:40 due to changes
+    expect(initalTimeStamp.textContent).toBe("0:40");
+    // duration 80 secs-- 1:20
+    expect(endTimeStamp.textContent).toBe("1:20");
+  });
+
+  test("volume component must be present", () => {
+    render(<Home />);
+    const volumeRange: HTMLInputElement = screen.getByRole("slider", {
+      name: /volume range/i,
+    });
+
+    expect(volumeRange.value).toBe("1");
+    expect(volumeRange.min).toBe("0");
+    expect(volumeRange.max).toBe("1");
+    expect(volumeRange.step).toBe("0.01");
   });
 });

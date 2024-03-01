@@ -81,6 +81,7 @@ const VolumeSection: FC<VideoRefProps> = ({ videoRef }) => {
       </div>
       <input
         ref={volumeRangeRef}
+        aria-label="volume range"
         type="range"
         onChange={volumeHandler}
         min={0}
