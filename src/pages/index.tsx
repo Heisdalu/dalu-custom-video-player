@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import Backward from "../../public/icons/backward";
 import Play from "../../public/icons/play";
 import Forward from "../../public/icons/forward";
@@ -6,12 +5,9 @@ import Stop from "../../public/icons/stop";
 import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Pause from "../../public/icons/pause";
 import { convertSecToStandardVideoDate } from "../../utils";
-import VolumeSection from "@/components/Volume/VolumeSection";
-import FullScreen from "@/components/FullScreen/FullScreen";
-import PlayBackSpeed from "@/components/PlayBack/PlayBackSpeed";
-
-const inter = Inter({ subsets: ["latin"] });
-/// todo--correct video format or hours also
+import VolumeSection from "../components/Volume/VolumeSection";
+import FullScreen from "../components/FullScreen/FullScreen";
+import PlayBackSpeed from "../components/PlayBack/PlayBackSpeed";
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -30,8 +26,9 @@ export default function Home() {
       !videoPlayedTimeRef.current &&
       !videoRef.current &&
       !rangeVideoTimeRef.current
-    )
+    ) {
       return;
+    }
 
     videoPlayedTimeRef.current!.textContent = convertSecToStandardVideoDate(
       videoRef.current!.currentTime
@@ -55,7 +52,6 @@ export default function Home() {
       videoRef.current.currentTime = value;
       videoPlayedTimeRef.current!.textContent =
         convertSecToStandardVideoDate(value);
-      // console.log(convertSecToStandardVideoDate(value));
     }
   };
 
@@ -71,7 +67,7 @@ export default function Home() {
   };
 
   const rewindVideo = () => {
-    //  we rewind video by 5 secs
+    //  rewind video by 5 secs
     // do not rewind when video current time is less than 5 secs
     // rewind when when it is above 5 secs
     if (!videoRef.current || videoRef.current!?.currentTime < 5) return;
@@ -79,7 +75,7 @@ export default function Home() {
     videoRef.current!.currentTime = videoRef.current!.currentTime - 5;
   };
   const forwardVideo = () => {
-    //  we forward video by 5 secs
+    //  forward video by 5 secs
     // do not forward when video current time + 5 secs exceed video duration
     // forward video current time  + 5 secs is less than video duration
 
@@ -106,22 +102,19 @@ export default function Home() {
     }
 
     if (!isPlayed && videoRef.current && !videoRef.current.paused) {
-      // console.log(videoRef.current.currentTime);
+
       videoRef.current.pause();
     }
   }, [isPlayed, mounted]);
 
-  // console.log(videoRef.current?.duration);
 
   return (
-    <div
-      className={`${inter.className} px-[1rem] h-[100vh] flex justify-center items-center`}
-    >
+    <div className={`px-[1rem] h-[100vh] flex justify-center items-center`}>
       <div className="flex flex-col items-center">
         <div className="max-w-[600px] h-[300px] bg-black w-[100%]">
           <video
-            controls
             onEnded={endVideo}
+            data-testid="video"
             onTimeUpdate={videoTimeUpdateFunc}
             ref={videoRef}
             className="h-[100%] w-[100%]"
@@ -133,26 +126,42 @@ export default function Home() {
 
         <div className="md:space-x-[1rem] flex flex-col space-y-[1rem] border-[1px] px-[0.5rem] py-[1rem] items-center justify-between md:flex-row md:space-y-0">
           <div aria-label="video controls" className="flex space-x-[1rem]">
-            <div className="tooltip" data-tip="rewind video">
-              <button onClick={rewindVideo}>
+            <div
+              className="tooltip"
+              data-tip="rewind video"
+              data-testid="custom_rewindtip"
+            >
+              <button onClick={rewindVideo} aria-label="rewind">
                 <Backward />
               </button>
             </div>
             <div
               className="tooltip"
+              data-testid="custom_playtip"
               data-tip={isPlayed ? "pause video" : "play video"}
             >
-              <button onClick={playVideoFunc}>
+              <button
+                onClick={playVideoFunc}
+                aria-label={`${isPlayed ? "Pause" : "Play"}`}
+              >
                 {isPlayed ? <Pause /> : <Play />}
               </button>
             </div>
-            <div className="tooltip" data-tip="forward video">
-              <button onClick={forwardVideo}>
+            <div
+              className="tooltip"
+              data-tip="forward video"
+              data-testid="custom_forwardtip"
+            >
+              <button onClick={forwardVideo} aria-label="forward">
                 <Forward />
               </button>
             </div>
 
-            <div className="tooltip" data-tip="stop video">
+            <div
+              className="tooltip"
+              data-tip="stop video"
+              data-testid="custom_stoptip"
+            >
               <button aria-label="stop video" onClick={stopVideoFunc}>
                 <Stop />
               </button>
@@ -164,14 +173,23 @@ export default function Home() {
               type="range"
               step={0.01}
               ref={rangeVideoTimeRef}
+              aria-label="video slider range"
               min={0}
               onChange={videoDurationFunc}
               max={100}
               className=" w-[130px] range range-xs range-warning"
             />
             <span className="text-[0.8rem]">
-              <span ref={videoPlayedTimeRef}>0:00</span>
-              <span> / {videoTime}</span>
+              <span
+                data-testid="video-initial-timestamp"
+                ref={videoPlayedTimeRef}
+              >
+                0:00
+              </span>
+              <span>
+                {" "}
+                / <span data-testid="video-end-timestamp">{videoTime}</span>
+              </span>
             </span>
           </div>
 
