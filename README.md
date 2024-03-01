@@ -7,7 +7,6 @@ A custom video player made from scratch using html5 features
 - [Table of contents](#table-of-contents)
 - [Overview](#overview)
   - [Screenshot](#screenshot)
-  - [Links](#links)
   - [Built with](#built-with)
 - [Installation](#installation)
 - [Acknowledgement](#acknowledgement)
@@ -17,10 +16,6 @@ A custom video player made from scratch using html5 features
 ### Screenshot
 
 ![screenshot](./public/ss.png)
-
-### Links
-
-- Live Site URL: [Click here](https://)
 
 ### Built with
 
@@ -34,9 +29,9 @@ A custom video player made from scratch using html5 features
 - Clone repo into your drive
 - cd into the repo
 - run npm install on the terminal
-- after installation of packages, run npm start
+- after installation of packages, npm run dev on the terminal
 
 ## Resources
 - [HtmlMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
-- [Html5 Video](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Video_and_audio_APIs)
+- [Html5 Video and Audio Apis](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Video_and_audio_APIs)
 
